@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, output, signal } from '@angular/core';
 import { Character } from '../../../interfaces/character.interfaces';
 
 @Component({
@@ -8,19 +8,21 @@ import { Character } from '../../../interfaces/character.interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddCharacterComponent {
+  name = signal<string>('');
+  power = signal<number>(0);
+  newCharacter = output<Character>();
+
   addCharacter() {
     const newCharacter: Character = {
-      id: 100 + 1,
+      id: Math.floor(Math.random() * 1000),
       name: this.name(),
       power: this.power(),
     };
-    console.log('newCharacter', newCharacter);
+    this.newCharacter.emit(newCharacter);
     this.resetFields();
   }
   resetFields() {
     this.name.set('');
     this.power.set(0);
   }
-  name = signal<string>('');
-  power = signal<number>(0);
 }

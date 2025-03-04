@@ -17,21 +17,10 @@ export class DragonballSuperPageComponent {
     { id: 1, name: 'Goku', power: 9001 },
     { id: 2, name: 'Vegeta', power: 8000 },
   ]);
-  addCharacter() {
-    if(this.name() === '' || this.power() === 0) {
-      return;
-    }
-    const newCharacter = {
-      id: this.characters().length + 1,
-      name: this.name(),
-      power: this.power(),
-    };
-    this.characters.update((characters) => [...characters, newCharacter]);
-    this.resetFields();
-  }
-  resetFields() {
-    this.name.set('');
-    this.power.set(0);
+  addCharacter(character: Character) {
+    this.characters.update((characters) => [...characters, character]);
+    console.log('received character', character);
+
   }
   deleteCharacter(id: number) {
     this.characters.update((characters) => characters.filter((character) => character.id !== id));
